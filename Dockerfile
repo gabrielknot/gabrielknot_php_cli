@@ -1,5 +1,4 @@
 FROM php:7.3-cli
-WORKDIR /html
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
@@ -24,20 +23,20 @@ RUN pecl install -o -f redis \
 &&  rm -rf /tmp/pear \
 &&  docker-php-ext-enable redis
 
-# Install composer
+## Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 
-# Add user for laravel application
-RUN groupadd -g 1000 www
-RUN useradd -u 1000 -ms /bin/bash -g www www
-
-
-# Copy existing application directory permissions
-COPY --chown=www:www . /html
-
-# Change current user to www
-USER www
-
-# Expose port 9000 and start php-fpm server
-EXPOSE 9000
+## Add user for laravel application
+#RUN groupadd -g 1000 nginx
+#RUN useradd -u 1000 -ms /bin/bash -g nginx nginx
+#
+#
+## Copy existing application directory permissions
+#COPY --chown=nginx:nginx . /
+#
+## Change current user to nginx
+#USER nginx
+#
+## Expose port 9000 and start php-fpm server
+##EXPOSE 9000
